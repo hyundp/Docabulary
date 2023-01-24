@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'imageWidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,16 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Container(
-        color: Colors.white,
-        child: const Center(
-          child: Text(
-            "Docabulary",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.blue, fontSize: 30),
-          ),
-        )
-      )
+      home: ImageWidgetApp(),
     );
   }
 }
