@@ -12,9 +12,18 @@ class LoadingImagePage extends StatefulWidget{
 
 class _LoadingImagePage extends State<LoadingImagePage>{
   @override
+  void initState() {
+    Timer(Duration(milliseconds: 5000), () {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) => MyHomePage(title: 'Doca')),
+          (route) => false,
+      );
+    });
+  }
+  @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: Text('Image'),),
+      appBar: AppBar(title: Text('Loading'),),
       body: Container(
         child: Center(
           child: Column(
@@ -36,13 +45,5 @@ class _LoadingImagePage extends State<LoadingImagePage>{
       )
     );
   }
-  @override
-  void initState() {
-    Timer(Duration(milliseconds: 5000), () {
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => MyHomePage(title: 'Doca')
-      )
-      );
-    });
-  }
+
 }
