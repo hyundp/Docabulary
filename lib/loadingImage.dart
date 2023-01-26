@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'main.dart';
-import 'mainPage.dart';
+import 'wordPage.dart';
 
 class LoadingImagePage extends StatefulWidget{
   @override
@@ -13,7 +13,7 @@ class LoadingImagePage extends StatefulWidget{
 class _LoadingImagePage extends State<LoadingImagePage>{
   @override
   void initState() {
-    Timer(Duration(milliseconds: 5000), () {
+    Timer(Duration(milliseconds: 3000), () {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
           builder: (context) => MyHomePage(title: 'Doca')),
           (route) => false,
