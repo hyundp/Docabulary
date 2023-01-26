@@ -1,13 +1,16 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'main.dart';
+import 'mainPage.dart';
 
-class ImageWidgetApp extends StatefulWidget{
+class LoadingImagePage extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _ImageWidgetApp();
+    return _LoadingImagePage();
   }
 }
 
-class _ImageWidgetApp extends State<ImageWidgetApp>{
+class _LoadingImagePage extends State<LoadingImagePage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -32,5 +35,14 @@ class _ImageWidgetApp extends State<ImageWidgetApp>{
         )
       )
     );
+  }
+  @override
+  void initState() {
+    Timer(Duration(milliseconds: 5000), () {
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => MyHomePage(title: 'Doca')
+      )
+      );
+    });
   }
 }
