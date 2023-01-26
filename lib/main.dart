@@ -1,7 +1,8 @@
-import 'package:doca/twoPage.dart';
+import 'package:doca/sentencePage.dart';
+import 'package:doca/testPage.dart';
 import 'package:flutter/material.dart';
 import 'loadingImage.dart';
-import 'mainPage.dart';
+import 'wordPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,22 +58,20 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('tab'),
-        ),
         body: TabBarView(
-          children: <Widget>[MainPage(), TwoPage()],
+          children: <Widget>[WordPage(), SentencePage(), TestPage()],
           controller: controller,
         ),
         bottomNavigationBar: TabBar(tabs: <Tab>[
           Tab(icon: Icon(Icons.looks_one, color: Colors.blue),),
-          Tab(icon: Icon(Icons.looks_two, color: Colors.blue),)
+          Tab(icon: Icon(Icons.looks_two, color: Colors.blue),),
+          Tab(icon: Icon(Icons.looks_3, color: Colors.blue),)
         ], controller: controller,)
     );
   }
