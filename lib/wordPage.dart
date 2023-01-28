@@ -7,7 +7,9 @@ class WordPage extends StatefulWidget {
 
 class _WordPage extends State<WordPage>{
   List words = [];
-  String input = "";
+  List meaning = [];
+  String inputEng = "";
+  String inputKor = "";
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -21,15 +23,30 @@ class _WordPage extends State<WordPage>{
               builder: (BuildContext context){
                 return AlertDialog(
                   title: Text("add your word"),
-                  content: TextField(
-                    onChanged: (String value){
-                      input = value;
-                    },
+                  content: Form(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(hintText: '단어'),
+                          onChanged: (String value){
+                            inputEng = value;
+                          },
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(hintText: '뜻'),
+                          onChanged: (String value){
+                            inputKor = value;
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   actions: <Widget>[
                     FloatingActionButton(onPressed: (){
                       setState(() {
-                        words.add(input);
+                        words.add(inputEng);
+                        meaning.add(inputKor);
                       });
                       Navigator.of(context).pop();
                     },
@@ -51,7 +68,7 @@ class _WordPage extends State<WordPage>{
                 key: Key(words[index]),
                 child: Card(
                     elevation: 4,
-                    margin: EdgeInsets.all(8),
+                    margin: EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(borderRadius:
                     BorderRadius.circular(8)
                     ),
