@@ -64,16 +64,46 @@ class _WordPage extends State<WordPage>{
       body: ListView.builder(
           itemCount: words.length,
           itemBuilder: (BuildContext context, int index) {
-            return Dismissible(	// 삭제 버튼 및 기능 추가
+            return Dismissible(
                 key: Key(words[index]),
                 child: Card(
                     elevation: 4,
-                    margin: EdgeInsets.all(15),
+                    margin: EdgeInsets.all(7),
                     shape: RoundedRectangleBorder(borderRadius:
                     BorderRadius.circular(8)
                     ),
                     child: ListTile(
                       title: Text(words[index]),
+                      onTap: ()=> showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: Colors.transparent,
+                          insetPadding: EdgeInsets.all(10),
+                          content: Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: double.infinity,
+                                height: 300,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.lightGreen,
+                                ),
+                                padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                                child: Text(words[index],
+                                    style: TextStyle(fontSize: 24),
+                                    textAlign: TextAlign.center
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left:0,
+                                child: Image.asset('image/light_purple_butterfly.png', width: 50, height: 50,),
+                              )
+                            ],
+                          ),
+                        )
+                      ),
                       trailing: IconButton(icon: Icon(
                           Icons.delete,
                           color: Colors.red
@@ -84,6 +114,7 @@ class _WordPage extends State<WordPage>{
                             });
                           }),
                     )
+
                 ));
           }),
     );
