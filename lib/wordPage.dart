@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class WordPage extends StatefulWidget {
   @override
@@ -13,9 +16,10 @@ class _WordPage extends State<WordPage>{
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context){
+    readFile('words');
     return Scaffold(
         appBar: AppBar(
-          title: Text('단어'),
+          title: Text('단어 목록'),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
@@ -64,6 +68,7 @@ class _WordPage extends State<WordPage>{
                     FloatingActionButton(onPressed: (){
                       if (this.formKey.currentState!.validate()){
                         this.formKey.currentState!.save();
+                        writeFile('words', inputEng);
                         setState(() {
                           words.add(inputEng);
                           meaning.add(inputKor);
@@ -137,6 +142,7 @@ class _WordPage extends State<WordPage>{
                           onPressed: () {
                             setState(() {
                               words.removeAt(index);
+                              meaning.removeAt(index);
                             });
                           }),
                     )
@@ -144,5 +150,27 @@ class _WordPage extends State<WordPage>{
                 ));
           }),
     );
+  }
+  void writeFile(String filename, String value) async {
+    var dir = await getApplicationDocumentsDirectory();
+    var file = await File(dir.path + '/${filename}.txt').readAsString();
+    file = file + '\n' + value;
+    File(dir.path+ '/${filename}.txt').writeAsStringSync(file);
+  }
+
+  void readFile(String filename) async {
+    try {
+      var dir = await getApplicationDocumentsDirectory();
+      var file = await File(dir.path + '/${filename}.txt').readAsString();
+      var array = file.split('\n');
+      setState(() {
+        for (var item in array){
+          words.add(item);
+      }
+    });
+    }
+    catch(e){
+      print(e.toString());
+    }
   }
 }
