@@ -10,6 +10,7 @@ class _WordPage extends State<WordPage>{
   List meaning = [];
   String inputEng = "";
   String inputKor = "";
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -24,19 +25,36 @@ class _WordPage extends State<WordPage>{
                 return AlertDialog(
                   title: Text("add your word"),
                   content: Form(
+                    key: this.formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.always,
                           decoration: InputDecoration(hintText: '단어'),
-                          onChanged: (String value){
-                            inputEng = value;
+                          onSaved: (value){
+                            setState((){
+                              inputEng = value as String;
+                            });
+                          },
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return '필수사항입니다';
+                            }
                           },
                         ),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.always,
                           decoration: InputDecoration(hintText: '뜻'),
-                          onChanged: (String value){
-                            inputKor = value;
+                          onSaved: (value){
+                            setState((){
+                              inputKor = value as String;
+                            });
+                          },
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return '필수사항입니다';
+                            }
                           },
                         )
                       ],
@@ -44,11 +62,15 @@ class _WordPage extends State<WordPage>{
                   ),
                   actions: <Widget>[
                     FloatingActionButton(onPressed: (){
-                      setState(() {
-                        words.add(inputEng);
-                        meaning.add(inputKor);
-                      });
-                      Navigator.of(context).pop();
+                      if (this.formKey.currentState!.validate()){
+                        this.formKey.currentState!.save();
+                        setState(() {
+                          words.add(inputEng);
+                          meaning.add(inputKor);
+                        });
+                        Navigator.of(context).pop();
+                      }
+
                     },
                     child: Text("Add"),),
                   ],
