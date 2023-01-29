@@ -10,7 +10,7 @@ class _SentencePage extends State<SentencePage> {
   Widget build(BuildContext context){
     return Scaffold(
         appBar: AppBar(
-          title: Text('문장'),
+          title: Text('문장 목록'),
         ),
         body: Container(
             child: const Center(
