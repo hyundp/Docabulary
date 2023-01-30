@@ -132,8 +132,9 @@ class _WordPage extends State<WordPage>{
                                     borderRadius: BorderRadius.circular(15),
                                     color: Colors.lightGreen,
                                 ),
-                                padding: EdgeInsets.fromLTRB(20, 110, 20, 20),
+                                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                                 child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(meaning[index],
                                       style: TextStyle(fontSize: 36),
