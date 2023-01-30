@@ -71,6 +71,7 @@ flutter:
     - image/logo6.png
     - image/logo7.png
     - image/light_purple_butterfly.png
+    - repo/words.txt
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
