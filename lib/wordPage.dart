@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class WordPage extends StatefulWidget {
   @override
@@ -14,9 +13,25 @@ class _WordPage extends State<WordPage>{
   String inputEng = "";
   String inputKor = "";
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState(){
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    var w_result = await readFile('words');
+    var m_result = await readFile('meaning');
+
+    setState(() {
+      words.addAll(w_result);
+      meaning.addAll(m_result);
+    });
+  }
+
   @override
   Widget build(BuildContext context){
-    readFile('words');
     return Scaffold(
         appBar: AppBar(
           title: Text('단어 목록'),
@@ -69,6 +84,7 @@ class _WordPage extends State<WordPage>{
                       if (this.formKey.currentState!.validate()){
                         this.formKey.currentState!.save();
                         writeFile('words', inputEng);
+                        writeFile('meaning', inputKor);
                         setState(() {
                           words.add(inputEng);
                           meaning.add(inputKor);
@@ -140,10 +156,14 @@ class _WordPage extends State<WordPage>{
                           color: Colors.red
                       ),
                           onPressed: () {
-                            setState(() {
-                              words.removeAt(index);
-                              meaning.removeAt(index);
-                            });
+                        String w = words[index];
+                        deleteFile('words', w);
+                        String m = meaning[index];
+                        deleteFile('meaning', m);
+                        setState(() {
+                          words.remove(w);
+                          meaning.remove(m);
+                        });
                           }),
                     )
 
@@ -151,26 +171,61 @@ class _WordPage extends State<WordPage>{
           }),
     );
   }
+
+  // 파일 쓰기
   void writeFile(String filename, String value) async {
     var dir = await getApplicationDocumentsDirectory();
     var file = await File(dir.path + '/${filename}.txt').readAsString();
-    file = file + '\n' + value;
+    if (file == null || file.isEmpty){
+      file = value;
+    }
+    else{
+      file = file + '\n' + value;
+    }
     File(dir.path+ '/${filename}.txt').writeAsStringSync(file);
   }
 
-  void readFile(String filename) async {
-    try {
-      var dir = await getApplicationDocumentsDirectory();
-      var file = await File(dir.path + '/${filename}.txt').readAsString();
-      var array = file.split('\n');
-      setState(() {
-        for (var item in array){
-          words.add(item);
+
+  //파일 내용 삭제
+  void deleteFile(String filename, String value) async {
+    var dir = await getApplicationDocumentsDirectory();
+    String new_file = '';
+    var file = await File(dir.path + '/${filename}.txt').readAsString();
+    var array = file.split('\n');
+    for (var item in array){
+      if (item == value){
+        continue;
       }
-    });
+      if (new_file == null || new_file.isEmpty || new_file == ''){
+        new_file = item;
+      }
+      else{
+        new_file = new_file + '\n' + item;
+      }
     }
-    catch(e){
-      print(e.toString());
+    File(dir.path+ '/${filename}.txt').writeAsStringSync(new_file);
+  }
+
+    // 파일 읽기
+    Future<List<String>> readFile(String filename) async {
+    List<String> res = [];
+    var dir = await getApplicationDocumentsDirectory();
+    bool fileExist = await File(dir.path +
+    '/${filename}.txt').exists();
+    if(fileExist == false){
+      File(dir.path+ '/${filename}.txt').writeAsStringSync('');
+      return res;
+    }
+    else{
+      var file = await File(dir.path + '/${filename}.txt').readAsString();
+      if (file == null || file.isEmpty){
+        return res;
+      }
+      var array = file.split('\n');
+      for (var item in array){
+        res.add(item);
+      }
+      return res;
     }
   }
 }
