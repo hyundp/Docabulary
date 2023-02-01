@@ -163,14 +163,31 @@ class _SentencePage extends State<SentencePage>{
                           color: Colors.red
                       ),
                           onPressed: () {
-                            String w = sentence[index];
-                            deleteFile('sentence', w);
-                            String m = interpret[index];
-                            deleteFile('interpret', m);
-                            setState(() {
-                              sentence.remove(w);
-                              interpret.remove(m);
-                            });
+                        showDialog(
+                          context: context,
+                        builder: (BuildContext context){
+                        return AlertDialog(
+                            content: Text(
+                              "Are you sure delete?",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            actions: <Widget>[
+                              FloatingActionButton(onPressed: (){
+                                  String w = sentence[index];
+                                  deleteFile('sentence', w);
+                                  String m = interpret[index];
+                                  deleteFile('interpret', m);
+                                  setState(() {
+                                  sentence.remove(w);
+                                  interpret.remove(m);
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("Delete")),
+                            ],
+                          );}
+                        );
+
                           }),
                     )
 

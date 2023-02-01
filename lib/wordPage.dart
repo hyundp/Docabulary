@@ -163,14 +163,31 @@ class _WordPage extends State<WordPage>{
                           color: Colors.red
                       ),
                           onPressed: () {
-                        String w = words[index];
-                        deleteFile('words', w);
-                        String m = meaning[index];
-                        deleteFile('meaning', m);
-                        setState(() {
-                          words.remove(w);
-                          meaning.remove(m);
-                        });
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context){
+                                  return AlertDialog(
+                                    content: Text(
+                                      "Are you sure delete?",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    actions: <Widget>[
+                                      FloatingActionButton(onPressed: (){
+                                        String w = words[index];
+                                        deleteFile('words', w);
+                                        String m = meaning[index];
+                                        deleteFile('meaning', m);
+                                        setState(() {
+                                          words.remove(w);
+                                          meaning.remove(m);
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                          child: Text("Delete")),
+                                    ],
+                                  );}
+                            );
+
                           }),
                     )
 
