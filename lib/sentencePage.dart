@@ -133,18 +133,20 @@ class _SentencePage extends State<SentencePage>{
                                       color: Colors.lightGreen,
                                     ),
                                     padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(interpret[index],
-                                                style: TextStyle(fontSize: 36),
-                                                textAlign: TextAlign.center
-                                            )
-                                          ]
-                                      )
+                                    child: Center(
+                                      child: SingleChildScrollView(
+                                          child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Text(interpret[index],
+                                                    style: TextStyle(fontSize: 27),
+                                                    textAlign: TextAlign.center
+                                                )
+                                              ]
+                                          )
+                                      ),
                                     )
                                 ),
                                 Positioned(
