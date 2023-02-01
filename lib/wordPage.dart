@@ -133,15 +133,21 @@ class _WordPage extends State<WordPage>{
                                     color: Colors.lightGreen,
                                 ),
                                 padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(meaning[index],
-                                      style: TextStyle(fontSize: 36),
-                                        textAlign: TextAlign.center
-                                    )
-                                  ]
-                                )
+                                  child: Center(
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(meaning[index],
+                                                  style: TextStyle(fontSize: 30),
+                                                  textAlign: TextAlign.center
+                                              )
+                                            ]
+                                        )
+                                    ),
+                                  )
                               ),
                               Positioned(
                                 top: 0,
